@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -15,7 +16,7 @@ import (
 // why does my solutions takes same time as with 1 goroutine
 const (
 	defaultGoroutineNumber = 20
-	defaultFilename        = "./test/asd.json"
+	defaultFilename        = "./test/asd.json" //sum of file is 214
 )
 
 type Objects []Object
@@ -26,6 +27,8 @@ type Object struct {
 }
 
 func main() {
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	args := os.Args[1:]
 
@@ -63,6 +66,7 @@ func main() {
 	input, err := getInputsFromFile(fileName)
 	if err != nil {
 		fmt.Printf("error while getting inputs from file: %v\n", err)
+		return
 	}
 
 	start := time.Now()
@@ -218,6 +222,7 @@ func solution2(goroutineNum int, input Objects) int {
 	return sum
 }
 
+// solution using mutexes
 func solution3(goroutineNum int, input Objects) int {
 	sum := 0
 
@@ -263,6 +268,7 @@ func solution3(goroutineNum int, input Objects) int {
 	return sum
 }
 
+// and atomic
 func solution4(goroutineNum int, input Objects) int {
 	sum := 0
 

@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	objectNumber = 1000000
-	filename     = "./test/zxc.json"
+	objectNumber = 100000000
+	filename     = "./test/asd.json"
 )
 
 type Object struct {
